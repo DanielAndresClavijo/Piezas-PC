@@ -1,0 +1,24 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<form action="/update_producto/{{producto.0}}" method="POST">
+  <input type="number" name="codigo_barras" placeholder="Codigo de barras" value="{{producto.1}}">
+  <input type="text" name="nombre" placeholder="Nombre del producto" value="{{producto.2}}">
+  <textarea cols="30" rows="10" name="especificaciones" placeholder="Especificaciones" >{{producto.3}}</textarea>
+  <input type="text" name="marca" placeholder="Marca" value="{{producto.4}}">
+  <input type="number" name="precio" placeholder="Precio" value="{{producto.5}}">
+  <input type="date" name="fecha_inventario" value="{{producto.6}}">
+  <select name="proveedor">
+  {% for proveedor in proveedores %}
+    {% if producto.7 == proveedor.0 %}
+    <option value="{{proveedor.0}}" selected>{{proveedor.2}}</option>
+    {% else %}   
+    <option value="{{proveedor.0}}">{{proveedor.2}}</option>
+    {% endif %}    
+  {% endfor %}    
+  </select>
+  <button type="submit">Guardar</button>
+</form>
+
+{% endblock %}
