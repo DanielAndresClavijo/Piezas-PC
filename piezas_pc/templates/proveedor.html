@@ -6,7 +6,7 @@
 {% with messages = get_flashed_messages() %}
   {% if messages %}
     {% for message in messages %}
-    <div class="alert alert-dismissible alert-secondary" role="alert">
+    <div class="alert alert-dismissible alert-success" role="alert">
       <strong>{{ message }}</strong>
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
@@ -29,18 +29,20 @@
     </thead>
     <tbody>
       {% for proveedor in provee %}
-        {% set key = false %}
-      <tr>
-        <td>
-          <a href="/edit_proveedor/{{proveedor.0}}" class="btn btn-secondary">Editar</a>
-          <a href="/delete_proveedor/{{proveedor.0}}" class="btn btn-danger btn-delete">Eliminar</a>
-        </td>
-        <td class="text-center">{{ proveedor.0 }}</td>
-        <td>{{ proveedor.2 }}</td>
-        <td>{{ proveedor.1 }}</td>
-        <td>{{ proveedor.3 }}</td>
-        <td></td>
-      </tr>
+        {% if proveedor.0 > 1 %} 
+          {% set key = false %}
+          <tr>
+            <td>
+              <a href="/edit_proveedor/{{proveedor.0}}" class="btn btn-secondary">Editar</a>
+              <a href="/delete_proveedor/{{proveedor.0}}" class="btn btn-danger btn-delete">Eliminar</a>
+            </td>
+            <td class="text-center">{{ proveedor.0 }}</td>
+            <td>{{ proveedor.2 }}</td>
+            <td>{{ proveedor.1 }}</td>
+            <td>{{ proveedor.3 }}</td>
+            <td></td>
+          </tr>
+        {% endif %}
       {% endfor %}
     </tbody>
   </table>

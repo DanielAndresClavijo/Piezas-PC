@@ -97,6 +97,7 @@ def update_proveedor(id):
 
 @app.route('/delete_proveedor/<string:id>')
 def delete_proveedor(id):
+  conMysql.query("UPDATE inventario SET id_proveedor = 1 WHERE id_proveedor = "+id+"")
   conSqLite.query('DELETE FROM proveedores WHERE id_proveedores='+id+'')
   flash('Producto eliminado')
   return redirect(url_for('proveedore2'))
