@@ -1,0 +1,82 @@
+{# TODO: Formulario de creacion de piezas pc #}
+  <div class="modal fade" id="crear-pieza" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel"></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="/add_product" method="POST">
+            <div class="form-group">
+              <input type="number" name="codigo_barras" placeholder="Ingrese codigo de barras" class="form-control">
+            </div>
+            <div class="form-group">
+              <input type="text" name="nombre" placeholder="Nombre del producto" class="form-control">
+            </div>
+            <div class="form-group">
+              <textarea cols="30" rows="2" name="especificaciones" placeholder="Especificaciones" class="form-control"></textarea>
+            </div>
+            <div class="form-group">
+              <input type="text" name="marca" placeholder="Marca" class="form-control">
+            </div>
+            <div class="form-group">
+              <input type="number" name="precio" placeholder="Precio" class="form-control">
+            </div>
+            <div class="form-group">
+              <select name="proveedor" class="form-control">
+                <option disabled selected>Seleccione proveedor</option>
+              {% for proveedor in proveedores %}
+                <option value="{{proveedor.0}}">{{proveedor.2}}</option>
+              {% endfor %}    
+            </select>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+              <button type="submit" class="btn btn-primary">Crear</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{# TODO: Fin formulario de creacion de piezas pc #}
+
+{# TODO: Formulario de creacion de proveedores #}
+  <div class="modal fade" id="crear-proveedor" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel"></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="/add_proveedor" method="POST">
+
+            <div class="form-group">
+              <input type="number" name="nit" placeholder="Ingrese el nit de la empresa" class="form-control">
+            </div>
+
+            <div class="form-group">
+              <input type="text" name="nombre-p" placeholder="Ingrese nombre del proveedor" class="form-control">
+            </div>
+
+            <div class="form-group">
+              <input type="text" name="nombre-e" placeholder="Ingrese nombre de la empresa" class="form-control">
+            </div>
+            
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+              <button type="submit" class="btn btn-primary">Crear</button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{# TODO: Fin formulario de creacion de piezas pc #}

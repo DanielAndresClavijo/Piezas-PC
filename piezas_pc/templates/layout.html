@@ -5,9 +5,121 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Piezas PC</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery.dataTables.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.dataTables.min.css') }}">
+  <link rel="shortcut icon" href="#" />{# Esta linea es para que o salga el error 
+    Failed to load resource: net::ERR_EMPTY_RESPONSE (20:00:55:963 | error, network)
+    at http://localhost:8383/favicon.ico #}
 </head>
 <body>
-  {% block body %}
-  {% endblock %}
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand mr-auto" href="/">Piezas PC</a>
+    <div class="collapse navbar-collapse" id="navbarColor01">
+
+      {% if prov == 1%} 
+        {% set prov = 0 %} 
+        <button type="button" class="nav-link btn-primary" >
+          <a href="/" class="text-decoration-none">
+            Ir a piezas PC
+          </a>
+        </button>
+        <button type="button" class="nav-link btn-primary" data-toggle="modal" data-target="#crear-proveedor">
+          Crear proveedor
+        </button> 
+      {% elif not proveedor %}
+        {% set prov = 1 %} 
+          <button type="button" class="nav-link btn-primary" >
+            <a href="/proveedores/{{prov}}" class="text-decoration-none">
+              Ir a proveedores
+            </a>
+          </button>
+          
+          <button type="button" class="nav-link btn-primary" data-toggle="modal" data-target="#crear-pieza">
+            Crear pieza
+          </button> 
+
+      {% endif %}
+    </div>
+  </nav>
+  <br>
+  {% include 'formularios.html' %}
+  <div class="container mt-5 pt-2 pb-2 text-dark ">
+    {% block body %}
+    {% endblock %}
+  </div>
+  
+  <!-- scripts -->
+  <script src="{{ url_for('static', filename='js/jquery-3.5.1.slim.min.js') }}" ></script>
+  <script src="{{ url_for('static', filename='js/jquery.dataTables.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/dataTables.responsive.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}" ></script>
+  <script src="{{ url_for('static', filename='js/main.js') }}" ></script>
+  <script>
+    $('#piezas-pc').DataTable( {
+      responsive: {
+        details: {
+          renderer: function ( api, rowIdx, columns ) {
+            var data = $.map( columns, function ( col, i ) {
+              return col.hidden ?
+                '<tr data-dt-row="'+col.rowIndex+'" data-dt-column="'+col.columnIndex+'">'+
+                    '<td>'+col.title+':'+'</td> '+
+                    '<td>'+col.data+'</td>'+
+                '</tr>' :
+                '';
+            } ).join('');
+
+            return data ?
+              $('<table/>').append( data ) :
+              false;
+          },
+          type: 'column',
+          target: -1
+        }
+      },
+      columnDefs: [ {
+          className: 'control',
+          orderable: false,
+          targets:   -1
+      }]
+    });
+    $('#proveedores').DataTable( {
+      responsive: {
+        details: {
+          renderer: function ( api, rowIdx, columns ) {
+            var data = $.map( columns, function ( col, i ) {
+              return col.hidden ?
+                '<tr data-dt-row="'+col.rowIndex+'" data-dt-column="'+col.columnIndex+'">'+
+                    '<td>'+col.title+':'+'</td> '+
+                    '<td>'+col.data+'</td>'+
+                '</tr>' :
+                '';
+            } ).join('');
+
+            return data ?
+              $('<table/>').append( data ) :
+              false;
+          },
+          type: 'column',
+          target: -1
+        }
+      },
+      columnDefs: [ {
+          className: 'control',
+          orderable: false,
+          targets:   -1
+      }]
+    });
+    
+    $('#crear-pieza').on('show.bs.modal', function (event) {
+      var modal = $(this)
+      modal.find('.modal-title').text('Creacion de piezas pc')
+    });
+
+    $('#crear-proveedor').on('show.bs.modal', function (event) {
+      var modal = $(this)
+      modal.find('.modal-title').text('Creacion de proveedor')
+    });
+  </script>
 </body>
 </html>

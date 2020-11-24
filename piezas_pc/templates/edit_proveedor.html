@@ -1,0 +1,34 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<div class="col-12 col-sm-11 col-md-10 col-lg-8 offset-sm-1 offset-md-1 offset-lg-2">
+  <div class="card card-body">
+    <form action="/update_proveedor/{{proveedor.0}}" method="POST">
+
+      <div class="form-group text-center text-light">
+        <h5>EDICI&Oacute;N DE PROVEEDORES</h5>
+      </div>
+
+      <div class="form-group">
+        <input type="number" name="nit" placeholder="Ingrese el nit de la empresa" value="{{proveedor.1}}" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <input type="text" name="nombre-p" placeholder="Ingrese nombre del proveedor" value="{{proveedor.2}}" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <input type="text" name="nombre-e" placeholder="Ingrese nombre de la empresa" value="{{proveedor.3}}" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary btn-block">Guardar</button>
+        <a href="/" class="btn btn-secondary btn-block" >Cancelar</a>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+
+{% endblock %}

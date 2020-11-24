@@ -1,71 +1,68 @@
 {% extends 'layout.html' %}
 
-{% block body %}
 
+{% block body %}
+<div class="container bg-light pb-2 pt-2">
 {% with messages = get_flashed_messages() %}
   {% if messages %}
     {% for message in messages %}
-      <p>{{ messages }}</p>
+    <div class="alert alert-dismissible alert-secondary" role="alert">
+      <strong>{{ message }}</strong>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
     {% endfor %}
   {% endif %}
 {% endwith %}
-<form action="/add_product" method="POST">
-  <input type="number" name="codigo_barras" placeholder="Codigo de barras">
-  <input type="text" name="nombre" placeholder="Nombre del producto">
-  <textarea cols="30" rows="10" name="especificaciones" placeholder="Especificaciones"></textarea>
-  <input type="text" name="marca" placeholder="Marca">
-  <input type="number" name="precio" placeholder="Precio">
-  <select name="proveedor">
-    <option disabled selected>Seleccione proveedor</option>
-  {% for proveedor in proveedores %}
-    <option value="{{proveedor.0}}">{{proveedor.2}}</option>
-  {% endfor %}    
-  </select>
-  <button type="submit">Guardar</button>
-</form>
+  <h1 class="text-center">Piezas PC</h1>
+  <table id="piezas-pc" class="display nowrap" style="width:100%">
+    <thead class=" font-weight-bold">
+      <tr>
+        <td>Operaciones</td>
+        <td>id</td>
+        <td>Nombre</td>
+        <td>Codigo de barras</td>
+        <td>Especificaciones</td>
+        <td>Marca</td>
+        <td>Precio</td>
+        <td>Fecha inventario</td>
+        <td>Nit empresa Proveedor</td>
+        <td>Proveedor</td>
+        <td>Empresa Proveedor</td>
+        <td></td>
+      </tr>
+    </thead>
+    <tbody>
+      {% for producto in productos %}
+        {% set key = false %}
+      <tr>
+        <td>
+          <a href="/edit_product/{{producto.0}}" class="btn btn-secondary">Editar</a>
+          <a href="/delete_product/{{producto.0}}" class="btn btn-danger btn-delete">Eliminar</a>
+        </td>
+        <td class="text-center">{{ producto.0 }}</td>
+        <td>{{ producto.2 }}</td>
+        <td>{{ producto.1 }}</td>
+        <td>{{ producto.3 }}</td>
+        <td>{{ producto.4 }}</td>
+        <td>{{ producto.5 }}</td>
+        <td>{{ producto.6 }}</td>
+      {% for proveedor in proveedores %}
+        {% if producto.7 == proveedor.0 and key == false %} 
+          {% set key = true %}
+        <td>{{ proveedor.1 }}</td>
+        <td>{{ proveedor.2 }}</td>
+        <td>{{ proveedor.3 }}</td>
+        {% endif %}
+      {% endfor %}
+        <td></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 
-<table border="1">
-  <thead>
-    <tr>
-      <td>id</td>
-      <td>Codigo de barras</td>
-      <td>Nombre</td>
-      <td>Especificaciones</td>
-      <td>Marca</td>
-      <td>Precio</td>
-      <td>Fecha inventario</td>
-      <td>Nit empresa Proveedor</td>
-      <td>Proveedor</td>
-      <td>Empresa Proveedor</td>
-      <td>Operaciones</td>
-    </tr>
-  </thead>
-  <tbody>
-    {% for producto in productos %}
-      {% set key = false %}
-    <tr>
-      <td>{{ producto.0 }}</td>
-      <td>{{ producto.1 }}</td>
-      <td>{{ producto.2 }}</td>
-      <td>{{ producto.3 }}</td>
-      <td>{{ producto.4 }}</td>
-      <td>{{ producto.5 }}</td>
-      <td>{{ producto.6 }}</td>
-    {% for proveedor in proveedores %}
-      {% if producto.7 == proveedor.0 and key == false %} 
-        {% set key = true %}
-      <td>{{ proveedor.1 }}</td>
-      <td>{{ proveedor.2 }}</td>
-      <td>{{ proveedor.3 }}</td>
-      {% endif %}
-    {% endfor %}
-      <td>
-        <a href="/edit_product/{{producto.0}}">Editar</a>
-        <a href="/delete_product/{{producto.0}}">Eliminar</a>
-      </td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
+</div>
+
 
 {% endblock %}
